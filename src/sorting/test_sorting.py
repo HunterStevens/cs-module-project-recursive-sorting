@@ -3,6 +3,16 @@ import random
 from sorting import *
 
 class RecursiveSortingTests(unittest.TestCase):
+    def test_merge(self):
+        arr1 = sorted([1, 5, 8, 4, 2, 9, 6, 0, 3, 7])
+        arr2 = sorted([])
+        arr3 = sorted([2])
+        arr4 = sorted([0, 1, 2, 3, 4, 5])
+        arr5 = sorted(random.sample(range(200), 50))
+        self.assertEqual(merge(arr1, arr2), sorted(arr1 + arr2))
+        self.assertEqual(merge(arr1, arr3), sorted(arr1 + arr3))
+        self.assertEqual(merge(arr1, arr4), sorted(arr1 + arr4))
+        self.assertEqual(merge(arr1, arr5), sorted(arr1 + arr5))
     def test_merge_sort(self):
         arr1 = [1, 5, 8, 4, 2, 9, 6, 0, 3, 7]
         arr2 = []
@@ -15,7 +25,8 @@ class RecursiveSortingTests(unittest.TestCase):
         self.assertEqual(merge_sort(arr3), [2])
         self.assertEqual(merge_sort(arr4), [0, 1, 2, 3, 4, 5])
         self.assertEqual(merge_sort(arr5), sorted(arr5))
-
+    '''
+    '''
     # Uncomment this test to test your in-place merge sort implementation
     # def test_in_place_merge_sort(self):
     #     arr1 = [1, 5, 8, 4, 2, 9, 6, 0, 3, 7]

@@ -4,47 +4,43 @@ def merge(arrA, arrB):
     merged_arr = [0] * elements
 
     # Your code here
-    for i in range(0, len(arrA)):
-        merged_arr[i] = arrA[i]
-
-    for i in range(0, len(arrB)):
-        middle = len(merged_arr) //2
-        merged_arr[middle + i] = arrB[i]
-
+    cur_a = cur_b = cur_merged = 0
+    while cur_merged < len(merged_arr):
+        if cur_a == len(arrA):
+            merged_arr[cur_merged] = arrB[cur_b]
+            cur_merged += 1
+            cur_b += 1
+        elif cur_b == len(arrB):
+            merged_arr[cur_merged] = arrA[cur_a]
+            cur_merged += 1
+            cur_a += 1         
+        elif arrA[cur_a] > arrB[cur_b]:
+            merged_arr[cur_merged] = arrB[cur_b]
+            cur_merged += 1
+            cur_b += 1
+        else:
+            merged_arr[cur_merged] = arrA[cur_a]
+            cur_merged += 1
+            cur_a += 1              
     return merged_arr
+
+print(merge([7,8,9],[1,2,3]))
 
 # TO-DO: implement the Merge Sort function below recursively
 def merge_sort(arr, level=1):
     print(f"\n merge_sort called {arr} at level {level}")
     # Your code here
-    if len(arr) == 0:
+    if len(arr) <= 1:
         return arr
-    if len(arr) > 1:
-        split_index = len(arr)//2
-        left = arr[ :split_index]
-        right = arr[split_index: ]
-        print(f"split made {left} + {right} at level {level}")
-        merge_sort(left, level=level+1)
-        merge_sort(right, level=level+1)
-        cur_l = cur_r = 0
-        while cur_l < len(left) and cur_r < len(right):
-            if left[cur_l] > right[cur_r]:
-                left[cur_l], right[cur_r] = right[cur_r], left[cur_l]
-                cur_l += 1
-            else:
-                cur_r += 1        
-        arr = merge(left,right)
-        print(f"merge happened {arr} at level {level} \n")
-    return arr
+    split_index = len(arr)//2
+    left = arr[ :split_index]
+    right = arr[split_index: ]
+    print(f"split made {left} + {right} at level {level}")
+    
+    arrB = merge(merge_sort(left, level=level+1), merge_sort(right, level=level+1))
+    print(f"merge happened {arrB} at level {level} \n")
+    return arrB
 
-        # while cur_l < len(left) and cur_r < len(right):
-        #     if left[cur_l] < right[cur_r]:
-        #         arr[cur_index] = left[cur_l]
-        #         cur_l += 1
-        #     else:
-        #         arr[cur_index] = right[cur_r]
-        #         cur_r += 1
-        #     cur_index += 1
 # STRETCH: implement the recursive logic for merge sort in a way that doesn't 
 # utilize any extra memory
 # In other words, your implementation should not allocate any additional lists 
